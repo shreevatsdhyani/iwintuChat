@@ -6,7 +6,8 @@ const RightPanel = ({ selectedUser, messages, onSendMessage }) => {
     return (
         <div className="flex flex-col h-full bg-[#1f1031] text-white">
             <Header username={selectedUser.username} />
-            <ChatBox messages={messages} onSendMessage={onSendMessage} />
+            <ChatBox messages={messages} onSendMessage={onSendMessage} selectedUser={selectedUser}
+             />
         </div>
     );
 };

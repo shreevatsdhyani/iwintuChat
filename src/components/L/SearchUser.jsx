@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { FaSearch } from 'react-icons/fa'; // Import the search icon
 
 const SearchUser = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -58,19 +59,7 @@ const SearchUser = () => {
                         type="submit"
                         className="p-2 text-[#1f1031] border border-purple-500 bg-[#6b21a8] rounded-full focus:outline-none"
                     >
-                        <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M19 19l-4-4m0-7a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"
-                            />
-                        </svg>
+                        <FaSearch className="w-5 h-5" /> {/* Use the imported search icon */}
                     </button>
                 </div>
 

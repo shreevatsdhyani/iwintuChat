@@ -16,7 +16,7 @@ const Chat = () => {
 
     // Handler to update messages for each user
     const handleSendMessage = (text) => {
-        if (selectedUser.username) {
+        if (selectedUser.username && selectedUser.username !== 'Select a user') {
             setMessages((prevMessages) => ({
                 ...prevMessages,
                 [selectedUser.username]: [

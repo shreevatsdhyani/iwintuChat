@@ -1,12 +1,33 @@
 import React, { useState } from 'react';
+import { AiOutlinePaperClip } from 'react-icons/ai'; // Import the paperclip icon
+import { FaPaperPlane } from 'react-icons/fa'; // Import the send icon
 
-const ChatBox = ({ messages, onSendMessage }) => {
+const ChatBox = ({ messages, onSendMessage, selectedUser }) => {
     const [newMessage, setNewMessage] = useState('');
+    const [file, setFile] = useState(null); // State for the selected file
 
     const handleSend = () => {
         if (newMessage.trim()) {
             onSendMessage(newMessage.trim());
             setNewMessage('');
+        }
+
+        if (file) {
+            // Handle file sending logic here
+            console.log("File sent:", file.name);
+            // Reset the file state after sending
+            setFile(null);
+        }
+    };
+
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent form submission if inside a form
+            handleSend(); // Call the send function
         }
     };
 
@@ -33,21 +54,36 @@ const ChatBox = ({ messages, onSendMessage }) => {
             </div>
 
             {/* Input Area */}
-            <div className="flex mt-4 space-x-2 z-10">
-                <input
-                    type="text"
-                    className="flex-1 p-2 rounded-lg bg-purple-200 text-black placeholder-gray-500 border border-[#a854b5] shadow-md focus:ring-2 focus:ring-[#9c44a4] focus:outline-none"
-                    placeholder="Type a message..."
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                />
-                <button
-                    onClick={handleSend}
-                    className="p-2 bg-[#9c44a4] text-white rounded-lg hover:bg-[#a854b5]"
-                >
-                    Send
-                </button>
-            </div>
+            {/* Only show input area if a valid user is selected */}
+            {selectedUser && selectedUser.username !== 'Select a user' && (
+                <div className="flex mt-4 space-x-2 z-10">
+                    <input
+                        type="text"
+                        className="flex-1 p-2 rounded-lg bg-purple-200 text-black placeholder-gray-500 border border-[#a854b5] shadow-md focus:ring-2 focus:ring-[#9c44a4] focus:outline-none"
+                        placeholder="Type a message..."
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        onKeyDown={handleKeyDown} // Add the key down handler here
+                    />
+                    {/* Hidden file input */}
+                    <input
+                        type="file"
+                        className="hidden"
+                        onChange={handleFileChange}
+                        id="file-upload" // Give it an id for the label
+                    />
+                    {/* Label to trigger file input */}
+                    <label htmlFor="file-upload" className="p-2 cursor-pointer bg-[#9c44a4] text-white rounded-lg hover:bg-[#a854b5] flex items-center justify-center">
+                        <AiOutlinePaperClip className="w-5 h-5" /> {/* Paperclip Icon */}
+                    </label>
+                    <button
+                        onClick={handleSend}
+                        className="p-2 bg-[#9c44a4] text-white rounded-lg hover:bg-[#a854b5]"
+                    >
+                        <FaPaperPlane /> {/* Use the send icon here */}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
