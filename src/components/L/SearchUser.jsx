@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // Import the search icon
 
-const SearchUser = () => {
+const SearchUser = ({ onUserSelect }) => { // Add onUserSelect as a prop
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const searchRef = useRef(null);
@@ -32,6 +32,7 @@ const SearchUser = () => {
     const handleSuggestionClick = (user) => {
         setSearchTerm(user);
         setSuggestions([]);
+        onUserSelect({ username: user }); // Call onUserSelect to open chat with selected user
     };
 
     const handleSubmit = (e) => {
@@ -44,7 +45,6 @@ const SearchUser = () => {
         <div className="flex justify-center items-center p-4">
             <form ref={searchRef} className="relative w-full max-w-sm" onSubmit={handleSubmit}>
                 <div className="flex items-center rounded-full border-2 border-purple-500 bg-transparent">
-                    {/* Transparent Search Input with Rounded Edges */}
                     <input
                         type="search"
                         value={searchTerm}
@@ -53,17 +53,13 @@ const SearchUser = () => {
                         placeholder="Search users..."
                         required
                     />
-
-                    {/* Search Button with Icon and Rounded Edges */}
                     <button
                         type="submit"
                         className="p-2 text-[#1f1031] border border-purple-500 bg-[#6b21a8] rounded-full focus:outline-none"
                     >
-                        <FaSearch className="w-5 h-5" /> {/* Use the imported search icon */}
+                        <FaSearch className="w-5 h-5" />
                     </button>
                 </div>
-
-                {/* Suggestions Dropdown */}
                 {suggestions.length > 0 && (
                     <ul className="absolute w-full mt-1 bg-[#9c44a4] border-2 border-purple-500 rounded-lg shadow-lg z-50">
                         {suggestions.map((user, index) => (

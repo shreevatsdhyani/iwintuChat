@@ -1,4 +1,3 @@
-// LeftPanel.jsx
 import React from 'react';
 import LogoutButton from './LogoutButton';
 import SearchUser from './SearchUser';
@@ -8,8 +7,8 @@ const LeftPanel = ({ onUserSelect }) => {
   return (
     <div className='h-screen bg-[#1f1031] text-white'>
       <div>
-        {/* Search Component */}
-        <SearchUser />
+        {/* Search Component with onUserSelect prop */}
+        <SearchUser onUserSelect={onUserSelect} />
         {/* UserList Component with onUserSelect prop */}
         <UserList onUserSelect={onUserSelect} />
       </div>
