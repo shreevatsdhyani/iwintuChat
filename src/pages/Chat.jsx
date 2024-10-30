@@ -10,12 +10,22 @@ const Chat = () => {
 
     // State to hold messages for each user
     const [messages, setMessages] = useState({
-        "John Doe": [{ text: "Hey, are you coming?", timestamp: "2:30 PM" }],
-        "Jane Smith": [{ text: "Thanks for the update!", timestamp: "1:15 PM" }],
+        "John Doe": [{ text: "Hey, are you coming?", sender: "John Doe", timestamp: "2:30 PM" }],
+        "Jane Smith": [{ text: "Thanks for the update!", sender: "Jane Smith", timestamp: "1:15 PM" }],
     });
 
-    // Get messages for the selected user
-    const userMessages = messages[selectedUser.username] || [];
+    // Handler to update messages for each user
+    const handleSendMessage = (text) => {
+        if (selectedUser.username) {
+            setMessages((prevMessages) => ({
+                ...prevMessages,
+                [selectedUser.username]: [
+                    ...(prevMessages[selectedUser.username] || []),
+                    { text, sender: 'You', timestamp: new Date().toLocaleTimeString() },
+                ],
+            }));
+        }
+    };
 
     return (
         <div className="flex bg-[#1f1031] h-screen">
@@ -23,7 +33,11 @@ const Chat = () => {
                 <LeftPanel onUserSelect={setSelectedUser} />
             </div>
             <div className="w-2/3 h-full">
-                <RightPanel selectedUser={selectedUser} messages={userMessages} />
+                <RightPanel
+                    selectedUser={selectedUser}
+                    messages={messages[selectedUser.username] || []}
+                    onSendMessage={handleSendMessage}
+                />
             </div>
         </div>
     );

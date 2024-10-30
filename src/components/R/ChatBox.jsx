@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
-const ChatBox = () => {
-    const [messages, setMessages] = useState([]);
+const ChatBox = ({ messages, onSendMessage }) => {
     const [newMessage, setNewMessage] = useState('');
 
     const handleSend = () => {
         if (newMessage.trim()) {
-            setMessages([...messages, { text: newMessage.trim(), sender: 'You' }]);
+            onSendMessage(newMessage.trim());
             setNewMessage('');
         }
     };
