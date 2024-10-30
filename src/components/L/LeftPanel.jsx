@@ -1,25 +1,24 @@
-import React from 'react'
-import LogoutButton from './LogoutButton'
-import SearchUser from './SearchUser'
-import UserList from './UserList'
+// LeftPanel.jsx
+import React from 'react';
+import LogoutButton from './LogoutButton';
+import SearchUser from './SearchUser';
+import UserList from './UserList';
 
-const LeftPanel = () => {
+const LeftPanel = ({ onUserSelect }) => {
   return (
-    <div className=' h-screen bg-[#1f1031] text-white'>
+    <div className='h-screen bg-[#1f1031] text-white'>
       <div>
-      <div>
-        <div className=''>
-        {/* <LoggedinUser /> */}
+        {/* Search Component */}
         <SearchUser />
-        </div>
-        <UserList />
+        {/* UserList Component with onUserSelect prop */}
+        <UserList onUserSelect={onUserSelect} />
       </div>
+      {/* Logout Button fixed at the bottom */}
       <div className='fixed bottom-0 w-1/3'>
         <LogoutButton />
       </div>
-      </div>
     </div>
-  )
-}
+  );
+};
 
-export default LeftPanel
+export default LeftPanel;
